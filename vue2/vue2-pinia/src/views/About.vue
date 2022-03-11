@@ -4,7 +4,10 @@
     {{stateData}}
     <div>
     {{piniaStore.count}}
+
     <button> + </button>
+
+    <input type="text" v-model="piniaStore.title">
     </div>
   </div>
 </template>
@@ -21,10 +24,17 @@ export default {
     const piniaStore = useStore()
     console.log(piniaStore.title)
 
+    setTimeout(() => {
+      piniaStore.$patch({
+        count: 999
+      })
+    }, 3000)
+
     return {
       title: 'Pinia',
       stateData,
       piniaStore
+
     }
   }
 }
