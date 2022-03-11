@@ -1,4 +1,4 @@
-# vue2-pinia
+# vue2 X pinia
 
 ## Project setup
 ```
