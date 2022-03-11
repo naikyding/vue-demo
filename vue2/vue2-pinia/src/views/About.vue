@@ -22,11 +22,22 @@ export default {
     const stateData = computed(() => store.state.data)
 
     const piniaStore = useStore()
-    console.log(piniaStore.title)
+
+    // 修改方式一:
+    piniaStore.count = 111
+    console.log(`第一種修後 ${piniaStore.count}`)
+
+    // 修改方式二 $patch (物件)
+    piniaStore.$patch({
+      count: 222
+    })
+    console.log(`第一種修改後 ${piniaStore.count}`)
 
     setTimeout(() => {
-      piniaStore.$patch({
-        count: 999
+      // 修改方式三 $patch (函式)
+      piniaStore.$patch((state) => {
+        state.count = 333
+        console.log(`第一種修改後 ${piniaStore.count}`)
       })
     }, 3000)
 
