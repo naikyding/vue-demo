@@ -35,8 +35,8 @@ export default {
     const piniaStore = useStore()
 
     piniaStore.$subscribe((mutation, state) => {
-      console.log(mutation.type, mutation.storeId, mutation.payload)
-      console.log(mutation)
+      // console.log(mutation.type, mutation.storeId, mutation.payload)
+      // console.log(mutation)
     })
 
     // computed 獲取 state (響應)
@@ -44,19 +44,19 @@ export default {
 
     // 修改方式一:
     piniaStore.count = 111
-    console.log(`第一種修後 ${piniaStore.count}`)
+    // console.log(`第一種修後 ${piniaStore.count}`)
 
     // 修改方式二 $patch (物件)
     piniaStore.$patch({
       count: 222
     })
-    console.log(`第二種修改後 ${piniaStore.count}`)
+    // console.log(`第二種修改後 ${piniaStore.count}`)
 
     setTimeout(() => {
       // 修改方式三 $patch (函式)
       piniaStore.$patch((state) => {
         state.count = 333
-        console.log(`第三種修改後 ${piniaStore.count}`)
+        // console.log(`第三種修改後 ${piniaStore.count}`)
       })
     }, 3000)
 

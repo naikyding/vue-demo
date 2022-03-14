@@ -24,5 +24,9 @@ export const useStore = defineStore('main', {
     getUserById: (state) => {
       return (userId) => state.user.find(user => user.id === userId)
     }
+  },
+
+  actions: {
+
   }
 })
