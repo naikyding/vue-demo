@@ -26,7 +26,11 @@ export const useStore = defineStore('main', {
     }
   },
 
+  // 業務邏輯功能
   actions: {
-
+    // 修改 state
+    addCount (newBalance) {
+      this.count += newBalance
+    }
   }
 })

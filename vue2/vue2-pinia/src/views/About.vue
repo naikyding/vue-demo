@@ -11,6 +11,8 @@
 
     <p>這是解構獲取的值: {{ count }}</p>
 
+    <hr/>
+
     <!-- getters -->
     <div>
       <p>{{ piniaStore.doubleCount }}</p>
@@ -18,6 +20,14 @@
       <p>
         {{ piniaStore.getUserById(3) }}
       </p>
+    </div>
+
+    <hr/>
+
+    <!-- actions -->
+    <div>
+      <p>{{count}}</p>
+      <button @click="piniaStore.addCount(300)">+300</button>
     </div>
     </div>
   </div>
@@ -59,6 +69,31 @@ export default {
         // console.log(`第三種修改後 ${piniaStore.count}`)
       })
     }, 3000)
+
+    //  actions
+
+    // 監聽 actions $onAction (回傳值為「移除監聽」函式)
+    const unSubscribeActions = piniaStore.$onAction(({
+      name, // action 名稱
+      store, // store 的實例，與 piniaStore 是一樣的東西 (在更新之前的狀態)
+      args, // 傳到 action 的參數 (以陣例顯示)
+      after, // 結束之後的 callback 函式
+      onError // 如果這個 action 錯誤執行的函式
+    }) => {
+      console.log(
+        `action 名稱: ${name}`)
+      console.log(args)
+      console.log(store)
+
+      after(() => {
+        console.log(`actions 執行完成的 count ${store.count}`)
+      })
+    })
+
+    setTimeout(() => {
+      // 回傳值為「移除監聽」函式
+      unSubscribeActions()
+    }, 5000)
 
     return {
       title: 'Pinia',
