@@ -8,6 +8,8 @@
     <button> + </button>
 
     <input type="text" v-model="piniaStore.title">
+
+    <p>這是解構獲取的值: {{ count }}</p>
     </div>
   </div>
 </template>
@@ -22,6 +24,9 @@ export default {
     const stateData = computed(() => store.state.data)
 
     const piniaStore = useStore()
+
+    // computed 獲取 state (響應)
+    const count = computed(() => piniaStore.count)
 
     // 修改方式一:
     piniaStore.count = 111
@@ -44,8 +49,8 @@ export default {
     return {
       title: 'Pinia',
       stateData,
-      piniaStore
-
+      piniaStore,
+      count
     }
   }
 }
