@@ -1,5 +1,15 @@
 import { defineStore } from 'pinia'
 
+export const useTodoStore = defineStore('todo', {
+  state: () => ({
+    title: 'TODO'
+  }),
+
+  getters: {},
+
+  actions: {}
+})
+
 export const useStore = defineStore('main', {
   state: () => ({
     title: 'pinia main',
