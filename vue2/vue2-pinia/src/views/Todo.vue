@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ todoStore.title }}</h1>
+    <h1 class="text-green-300">{{ todoStore.title }}</h1>
   </div>
 </template>
 
