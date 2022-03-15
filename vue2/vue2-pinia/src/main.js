@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/vuex'
+import './index.css'
 
 import VueCompositionAPI from '@vue/composition-api'
 import { createPinia, PiniaVuePlugin } from 'pinia'
