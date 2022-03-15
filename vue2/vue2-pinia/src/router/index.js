@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/todo',
     name: 'TodoList',
-    component: () => import('../views/Todo.vue')
+    component: () => import('../views/Todo')
   }
 ]
 

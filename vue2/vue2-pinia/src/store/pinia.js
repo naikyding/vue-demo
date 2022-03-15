@@ -2,12 +2,55 @@ import { defineStore } from 'pinia'
 
 export const useTodoStore = defineStore('todo', {
   state: () => ({
-    title: 'TODO'
+    title: 'TODO LIST',
+
+    // 新增的項目
+    form: {
+      status: false,
+      content: null
+    },
+
+    // 修改的項目
+    editItem: {},
+
+    // 所有列表資料
+    list: [
+      {
+        content: '123',
+        status: false
+      }
+    ]
+
   }),
 
   getters: {},
 
-  actions: {}
+  actions: {
+    initList ({ list, title }) {
+      this.list = [...list]
+      this.title = title
+    },
+
+    addItem (data) {
+      this.list.push(data)
+      this.form = {
+        content: null,
+        status: false
+      }
+    },
+
+    doneTodoItem (index) {
+      this.list[index].status = !this.list[index].status
+    },
+
+    delItem (index) {
+      this.list.splice(index, 1)
+    },
+
+    editItem (index) {
+      console.log(index)
+    }
+  }
 })
 
 export const useStore = defineStore('main', {
