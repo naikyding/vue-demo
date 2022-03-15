@@ -88,12 +88,15 @@ export default {
       after(() => {
         console.log(`actions 執行完成的 count ${store.count}`)
       })
-    })
+    },
+    // 卸載組件後，仍監聽 (第二參數)
+    true)
 
-    setTimeout(() => {
-      // 回傳值為「移除監聽」函式
-      unSubscribeActions()
-    }, 5000)
+    console.log(unSubscribeActions)
+    // setTimeout(() => {
+    //   // 回傳值為「移除監聽」函式
+    //   unSubscribeActions()
+    // }, 5000)
 
     return {
       title: 'Pinia',
