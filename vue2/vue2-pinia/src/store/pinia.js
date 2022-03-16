@@ -1,17 +1,33 @@
 import { defineStore } from 'pinia'
 
+const resetFormData = () => ({
+  id: null,
+  content: null,
+  status: false
+})
+
+const generateId = () =>
+  Date.now().toString(36)
+
+const findItemIndex = (id, list) =>
+  list.indexOf(list.find(item => item.id === id))
+
+const filterItemById = (id, list) =>
+  list.find(item => item.id === id)
+
 export const useTodoStore = defineStore('todo', {
   state: () => ({
-    title: 'TODO LIST',
+    title: 'TODOs',
 
     // 新增的項目
     form: {
       status: false,
-      content: null
+      content: null,
+      id: null
     },
 
     // 修改的項目
-    editItem: {},
+    editItemForm: {},
 
     // 所有列表資料
     list: [
@@ -31,24 +47,28 @@ export const useTodoStore = defineStore('todo', {
       this.title = title
     },
 
-    addItem (data) {
-      this.list.push(data)
-      this.form = {
-        content: null,
-        status: false
-      }
+    addItem (addItemData) {
+      addItemData.id = generateId()
+      this.list = [...this.list, addItemData]
+      this.form = { ...resetFormData() }
     },
 
-    doneTodoItem (index) {
-      this.list[index].status = !this.list[index].status
+    doneItem (id) {
+      const item = filterItemById(id, this.list)
+      item.status = !item.status
     },
 
-    delItem (index) {
-      this.list.splice(index, 1)
+    delItem (id) {
+      this.list.splice(findItemIndex(id, this.list), 1)
     },
 
-    editItem (index) {
-      console.log(index)
+    editItem (id) {
+      this.editItemForm = filterItemById(id, this.list)
+    },
+
+    updateItem (item, content) {
+      console.log(item, content)
+      item.content = content
     }
   }
 })
