@@ -18,17 +18,28 @@
       <!-- list -->
       <ul class="mt-5 bg-white rounded-md">
         <li class="px-4 py-3">
-          DONE / TODO / ALL
+          <!-- 篩選類別 -->
+          <button
+            class="border border-green-200 mx-1 rounded-md px-3"
+            :class="[{ 'bg-green-400 text-white': todoStore.activeType === button}]"
+            v-for="button in todoStore.typeAry"
+            :key="button"
+            @click="todoStore.activeType = button"
+          >
+            {{ button }}
+          </button>
         </li>
+
+        <!-- 列表內容 -->
         <li
-          v-for="item in todoStore.list"
-          class="flex px-4 py-3"
+          v-for="item in todoStore.filterList"
+          class="flex px-4 py-3 hover:bg-green-100"
           :key="item.id"
         >
           <!-- done -->
           <div class="done flex-none flex justify-center items-center">
             <input
-              class="border rounded-md py-1 focus:border-sky-500 focus:ring-sky-500 px-3"
+              class="cursor-pointer"
               type="checkbox"
               :checked="item.status"
               @click="todoStore.doneItem(item.id)"
@@ -57,14 +68,17 @@
           <!-- 操作 -->
           <div class="operate flex-none">
             <!-- EDIT -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg
+              @click="todoStore.editItem(item.id)"
+              xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
 
             <!-- DELETE -->
             <svg
               @click="todoStore.delItem(item.id)"
-              xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-2 h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
@@ -72,27 +86,6 @@
         </li>
       </ul>
     </div>
-
-<!-- list -->
-  <!-- <div class="grid grid-cols-4">
-    <ul class="mt-10 col-span-2 col-start-2 text-left">
-      <li v-for="(item, index) in todoStore.list" :key="index">
-        <label>
-          <input type="checkbox" :checked="item.status" @click="todoStore.doneTodoItem(index)"> -->
-          <!-- <input
-            class="border rounded-md py-1 focus:border-sky-500 focus:ring-sky-500 px-3"
-            type="text"
-            :value=""
-            @dbclick="todoStore.editItem(index)"
-          /> -->
-        <!-- </label>
-
-        <button class="rounded-xl px-2 py-1 bg-green-400 text-white text-xs mx-3">EDIT</button>
-        <button @click="todoStore.delItem(index)" class="rounded-xl px-2 py-1 bg-red-500 text-white text-xs">DEL</button>
-      </li>
-    </ul>
-  </div> -->
-
   </div>
 </template>
 
@@ -113,7 +106,6 @@ export default {
     }
 
     todoStore.$subscribe((mutation, state) => {
-      console.log('state 更新於 sessionStorage!')
       sessionStorage.setItem('todoData', JSON.stringify(state))
     })
 

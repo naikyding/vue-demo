@@ -15,6 +15,11 @@ const findItemIndex = (id, list) =>
 const filterItemById = (id, list) =>
   list.find(item => item.id === id)
 
+const filterType = () => ({
+  Active: false,
+  Done: true
+})
+
 export const useTodoStore = defineStore('todo', {
   state: () => ({
     title: 'TODOs',
@@ -32,14 +37,23 @@ export const useTodoStore = defineStore('todo', {
     // 所有列表資料
     list: [
       {
-        content: '123',
+        id: 111,
+        content: '...',
         status: false
       }
-    ]
+    ],
 
+    typeAry: ['All', 'Active', 'Done'],
+    activeType: 'All'
   }),
 
-  getters: {},
+  getters: {
+    // 顯示項目 (篩選後)
+    filterList: state => state.list.filter(item => {
+      if (state.activeType === 'All') return true
+      return item.status === filterType()[state.activeType]
+    })
+  },
 
   actions: {
     initList ({ list, title }) {
@@ -66,9 +80,8 @@ export const useTodoStore = defineStore('todo', {
       this.editItemForm = filterItemById(id, this.list)
     },
 
-    updateItem (item, content) {
-      console.log(item, content)
-      item.content = content
+    updateItem () {
+      this.editItemForm = {}
     }
   }
 })
